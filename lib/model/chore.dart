@@ -1,11 +1,12 @@
 
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:piggy_pennies/model/child.dart';
 
 
 part 'chore.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Chore{
    String id;
   String name;
@@ -14,6 +15,8 @@ class Chore{
   String frequency;
   String photoUrl;
   String notes;
+  String createdBy;
+  List<Child> assignees;
 
 
 
@@ -25,6 +28,8 @@ class Chore{
       this.frequency,
       this.photoUrl,
       this.notes,
+      this.createdBy,
+      this.assignees,
      
      });
 

@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_it/get_it.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/model/chore.dart';
 import 'package:piggy_pennies/model/user.dart';
+
+import 'authentication_service.dart';
 
 class FirestoreService {
   final CollectionReference _usersCollectionReference =
@@ -13,6 +16,9 @@ class FirestoreService {
 
       final CollectionReference _choresCollectionReference =
       Firestore.instance.collection("chores");
+
+        AuthenticationService get authenticationService =>
+      GetIt.I<AuthenticationService>();
 
 
   Future createUser(User user) async {
@@ -36,6 +42,9 @@ class FirestoreService {
   }
 
     Future registerChore(Chore chore) async {
+      String ui = await authenticationService.currentUser();
+      chore.createdBy = ui;
+        
     try {
       await _choresCollectionReference
           .document(chore.id)

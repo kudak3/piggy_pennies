@@ -21,13 +21,13 @@ class _AddChoreState extends State<AddChore> {
   String choreName;
   String frequency;
   String notes;
-    bool _isLoading = false;
+  bool _isLoading = false;
 
   List<Child> children = [
     Child(fullName: "Kudakwashe  Kuda"),
     Child(fullName: "Brian  Kuda")
   ];
-    List<Child> assignees = [];
+  List<Child> assignees = [];
 
   FirestoreService get firestoreService => GetIt.I<FirestoreService>();
 
@@ -83,22 +83,38 @@ class _AddChoreState extends State<AddChore> {
                 ),
                 Row(
                   children: <Widget>[
-                    ...children.map(
-                      (e) => Row(
-                        children: <Widget>[
-                          GestureDetector(onTap: () {
-                            setState(() {
-                              assignees.add(e);
-                            });
-                                  },child:Stack(children :<Widget>[Container(height:50.0,child: CircleAvatar(child: Text(e.fullName[0],),)),
-                          Icon(Icons.check_circle,color: Colors.white,),
-                          ],)),
-                          SizedBox(
-                            width: 10.0,
-                          ),
-                        ],)
-                      ),
-                    
+                    ...children.map((e) => Row(
+                          children: <Widget>[
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    assignees.contains(e)
+                                        ? assignees.remove(e)
+                                        : assignees.add(e);
+                                  });
+                                },
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 50.0,
+                                        child: CircleAvatar(
+                                          child: Text(
+                                            e.fullName[0],
+                                          ),
+                                        )),
+                                    assignees.contains(e)
+                                        ? Icon(
+                                            Icons.check_circle,
+                                            color: Colors.green,
+                                          )
+                                        : Container(height: 0, width: 0),
+                                  ],
+                                )),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                          ],
+                        )),
                   ],
                 ),
                 SizedBox(
@@ -128,7 +144,7 @@ class _AddChoreState extends State<AddChore> {
                         hintText: "Enter Optional notes"),
                   ),
                 ),
-                SizedBox(height:20.0),
+                SizedBox(height: 20.0),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   width: double.infinity,
@@ -154,20 +170,24 @@ class _AddChoreState extends State<AddChore> {
     );
   }
 
-   _next() async {
-      setState(() {
+  _next() async {
+    setState(() {
       _isLoading = true;
     });
 
-    APIResponse result = await firestoreService.registerChore(Chore(name: widget.choreName,frequency: frequency,dueDate: widget.dueDate,price: widget.price,notes: notes
-       ));
+    APIResponse result = await firestoreService.registerChore(Chore(
+        name: widget.choreName,
+        frequency: frequency,
+        dueDate: widget.dueDate,
+        price: widget.price,
+        notes: notes));
 
     setState(() {
       _isLoading = false;
     });
 
     if (!result.error) {
-      await showToast("Child successfully registered");
+      await showToast("Chore successfully registered");
 
       await showDialog(
           context: context,
@@ -185,28 +205,33 @@ class _AddChoreState extends State<AddChore> {
                   FlatButton(
                     child: Text('Yes'),
                     onPressed: () {
-                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ChooseChore(),)
-                        );
-                     
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChooseChore(),
+                          ));
                     },
                   ),
                   FlatButton(
                     child: Text('No'),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      
                     },
                   ),
                 ],
               ));
+
+               Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChooseChore(),
+                          ));
     } else {
       showToast(result.errorMessage);
     }
   }
-    showToast(String msg) {
+
+  showToast(String msg) {
     Fluttertoast.showToast(
         msg: msg,
         toastLength: Toast.LENGTH_LONG,
