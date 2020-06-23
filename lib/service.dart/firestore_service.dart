@@ -5,6 +5,7 @@ import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/model/chore.dart';
 import 'package:piggy_pennies/model/user.dart';
 
+import '../model/chore.dart';
 import 'authentication_service.dart';
 
 class FirestoreService {
@@ -78,5 +79,17 @@ class FirestoreService {
     .listen((data) =>
         data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
         yield children;
+  }
+
+  Stream<List<Chore>> getChoresByChild(Child child) async*{
+//    String ui = await authenticationService.currentUser();
+    List<Chore> chores;
+
+    _choresCollectionReference
+        .where("assignee", arrayContains: child)
+        .snapshots()
+        .listen((data) =>
+        data.documents.forEach((doc) => chores.add(Chore.fromJson(doc.data))));
+    yield chores;
   }
 }

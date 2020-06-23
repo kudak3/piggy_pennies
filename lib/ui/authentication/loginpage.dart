@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
+import 'package:piggy_pennies/ui/child/child_auth.dart';
 import 'package:piggy_pennies/ui/child/child_home_page.dart';
 import 'package:piggy_pennies/ui/parent/choose_chore.dart';
 import 'package:piggy_pennies/ui/parent/homepage.dart';
