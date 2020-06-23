@@ -14,6 +14,7 @@ Chore _$ChoreFromJson(Map<String, dynamic> json) {
     dueDate: json['dueDate'] as String,
     frequency: json['frequency'] as String,
     photoUrl: json['photoUrl'] as String,
+    notes: json['notes'] as String,
   );
 }
 
@@ -24,4 +25,5 @@ Map<String, dynamic> _$ChoreToJson(Chore instance) => <String, dynamic>{
       'dueDate': instance.dueDate,
       'frequency': instance.frequency,
       'photoUrl': instance.photoUrl,
+      'notes': instance.notes,
     };

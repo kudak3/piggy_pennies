@@ -13,6 +13,7 @@ class Chore{
   String dueDate;
   String frequency;
   String photoUrl;
+  String notes;
 
 
 
@@ -23,6 +24,7 @@ class Chore{
       this.dueDate,
       this.frequency,
       this.photoUrl,
+      this.notes,
      
      });
 
