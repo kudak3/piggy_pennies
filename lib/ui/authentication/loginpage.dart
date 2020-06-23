@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: <Widget>[
               Image.asset('assets/images/applogo.png'),
-              _isLoading
+                          _isLoading
                   ? Center(
                       child: Padding(
                           padding: EdgeInsets.all(10.0),
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                                     validator: _validateEmail,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.person,
-                                            color: Colors.green),
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Email",
                                         hintText:
                                             "Please Enter Your Email Address"),
@@ -79,7 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                                     validator: _validatePassword,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.lock,
-                                            color: Colors.green),
+                                        
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Password",
                                         hintText: "Enter A password"),
                                   ),
@@ -94,12 +95,12 @@ class _LoginPageState extends State<LoginPage> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
                             child: RaisedButton(
-                              color: Colors.green,
+                              color: Color.fromRGBO(38, 131, 138,1),
                               textColor: Colors.white,
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
-                                  _signUp();
+                                  _signIn();
                                 } else {
                                   setState(() {
                                     _autoValidate = true;
@@ -123,21 +124,16 @@ class _LoginPageState extends State<LoginPage> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
                             child: RaisedButton(
-                              color: Colors.green,
+                              color: Color.fromRGBO(38, 131, 138,1),
                               textColor: Colors.white,
                               onPressed: () {
-                                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ChooseChore(),
-                        ),
-                      );
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (_) => SignupPage(),
-                                //   ),
-                                // );
+                             
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => SignupPage(),
+                                  ),
+                                );
                               },
                               padding: EdgeInsets.only(
                                   left: 30.0,
@@ -177,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
       return null;
   }
 
-  _signUp() async {
+  _signIn() async {
     setState(() {
       _isLoading = true;
     });

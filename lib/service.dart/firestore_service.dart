@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/model/child.dart';
@@ -57,11 +58,11 @@ class FirestoreService {
   }
 
   Stream<List<Child>> getChildrenByParentId() async*{
-      String ui = await authenticationService.currentUser();
+      User user = await authenticationService.currentUser();
       List<Child> children;
       
     _childrenCollectionReference
-    .where("parentId", isEqualTo: ui)
+    .where("parentId", isEqualTo: user.uid)
     .snapshots()
     .listen((data) =>
         data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
