@@ -35,7 +35,8 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   get_it: ^4.0.2
   fluttertoast: ^4.0.1
-  google_sign_in: ^4.5.1
+
+  cloud_firestore: ^0.13.7
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +62,7 @@ flutter:
 
   assets:
     - assets/images/applogo.png
+    - assets/icons/clean.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

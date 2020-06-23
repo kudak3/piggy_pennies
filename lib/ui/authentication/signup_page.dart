@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get_it/get_it.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
+import 'package:piggy_pennies/ui/parent/homepage.dart';
 
-import 'homepage.dart';
+import 'child_reg.dart';
+
+
 
 class SignupPage extends StatefulWidget {
   _SignupPageState createState() => _SignupPageState();
@@ -33,7 +36,7 @@ class _SignupPageState extends State<SignupPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.asset('assets/images/createzimlogo.png'),
+         
               _isLoading
                   ? Center(
                       child: Padding(
@@ -213,7 +216,7 @@ class _SignupPageState extends State<SignupPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => HomePage(),
+          builder: (_) => ChildReg(newacc: true,parent: result.data.uid,),
         ),
       );
     } else {
@@ -230,27 +233,5 @@ class _SignupPageState extends State<SignupPage> {
         fontSize: 16.0);
   }
 
-  signupWithGoogle() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    APIResponse result = await authenticationService.signUpWithGoogle();
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (!result.error) {
-      await showToast("User successfully registered");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => HomePage(),
-        ),
-      );
-    } else {
-      showToast(result.errorMessage);
-    }
-  }
+ 
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -6,10 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
+import 'package:piggy_pennies/ui/parent/choose_chore.dart';
+import 'package:piggy_pennies/ui/parent/homepage.dart';
 
-import 'homepage.dart';
-
-
+import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
@@ -34,100 +33,126 @@ class _LoginPageState extends State<LoginPage> {
         margin: const EdgeInsets.only(
             top: 10, left: 16.0, right: 16.0, bottom: 10.0),
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: <Widget>[
               Image.asset('assets/images/applogo.png'),
               _isLoading
                   ? Center(
-                      child: Padding(padding: EdgeInsets.all(10.0),child:CircularProgressIndicator()),
+                      child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: CircularProgressIndicator()),
                     )
-                  :  
-                             Form(
-                              key: _formKey,
-                              autovalidate: _autoValidate,
-                              child: Column(
-                                children: <Widget>[
-                                  Card(
-                                    elevation: 5.0,
-                                    child: Column(
-                                      children: <Widget>[
-                                       
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10.0, 0.0, 20.0, 8.0),
-                                          child: TextFormField(
-                                            onSaved: (value) => setState(() {
-                                              email = value;
-                                            }),
-                                            validator: _validateEmail,
-                                            decoration: InputDecoration(
-                                                icon: Icon(Icons.person,
-                                                    color: Colors.green),
-                                                labelText: "Email",
-                                                hintText:
-                                                    "Please Enter Your Email Address"),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10.0),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10.0, 0.0, 20.0, 8.0),
-                                          child: TextFormField(
-                                            controller: _pass,
-                                            onSaved: (value) => setState(() {
-                                              password = value;
-                                            }),
-                                            validator: _validatePassword,
-                                            decoration: InputDecoration(
-                                                icon: Icon(Icons.lock,
-                                                    color: Colors.green),
-                                                labelText: "Password",
-                                                hintText: "Enter A password"),
-                                          ),
-                                        ),
-                                      
-                                       
-                                        const SizedBox(height: 10.0),
-                                      ],
-                                    ),
+                  : Form(
+                      key: _formKey,
+                      autovalidate: _autoValidate,
+                      child: Column(
+                        children: <Widget>[
+                          Card(
+                            elevation: 5.0,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10.0, 0.0, 20.0, 8.0),
+                                  child: TextFormField(
+                                    onSaved: (value) => setState(() {
+                                      email = value;
+                                    }),
+                                    validator: _validateEmail,
+                                    decoration: InputDecoration(
+                                        icon: Icon(Icons.person,
+                                            color: Colors.green),
+                                        labelText: "Email",
+                                        hintText:
+                                            "Please Enter Your Email Address"),
                                   ),
-                                  const SizedBox(height: 20.0),
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 16.0),
-                                    width: double.infinity,
-                                    child: RaisedButton(
-                                      color: Colors.green,
-                                      textColor: Colors.white,
-                                      onPressed: () {
-                                        if (_formKey.currentState.validate()) {
-                                          _formKey.currentState.save();
-                                          _signUp();
-                                        } else {
-                                          setState(() {
-                                            _autoValidate = true;
-                                          });
-                                        }
-                                      },
-                                      padding: EdgeInsets.only(
-                                          left: 30.0,
-                                          right: 30.0,
-                                          top: 16.0,
-                                          bottom: 16.0),
-                                      child: Text('Join the Community'),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                    ),
+                                ),
+                                const SizedBox(height: 10.0),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10.0, 0.0, 20.0, 8.0),
+                                  child: TextFormField(
+                                    controller: _pass,
+                                    onSaved: (value) => setState(() {
+                                      password = value;
+                                    }),
+                                    validator: _validatePassword,
+                                    decoration: InputDecoration(
+                                        icon: Icon(Icons.lock,
+                                            color: Colors.green),
+                                        labelText: "Password",
+                                        hintText: "Enter A password"),
                                   ),
-                                
-                                  
-                              
-                                ],
+                                ),
+                                const SizedBox(height: 10.0),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Colors.green,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  _formKey.currentState.save();
+                                  _signUp();
+                                } else {
+                                  setState(() {
+                                    _autoValidate = true;
+                                  });
+                                }
+                              },
+                              padding: EdgeInsets.only(
+                                  left: 30.0,
+                                  right: 30.0,
+                                  top: 16.0,
+                                  bottom: 16.0),
+                              child: Text('SignIn'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                          
-                       
+                          ),
+                          const SizedBox(height: 20.0),
+                          Container(
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Colors.green,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                 Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChooseChore(),
+                        ),
+                      );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (_) => SignupPage(),
+                                //   ),
+                                // );
+                              },
+                              padding: EdgeInsets.only(
+                                  left: 30.0,
+                                  right: 30.0,
+                                  top: 16.0,
+                                  bottom: 16.0),
+                              child: Text('SignUp'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
             ],
           ),
         ),
@@ -151,8 +176,6 @@ class _LoginPageState extends State<LoginPage> {
     else
       return null;
   }
-
-
 
   _signUp() async {
     setState(() {
@@ -187,6 +210,4 @@ class _LoginPageState extends State<LoginPage> {
         textColor: Colors.green,
         fontSize: 16.0);
   }
-
- 
 }

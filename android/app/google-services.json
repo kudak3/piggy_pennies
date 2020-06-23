@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "883904213865",
+    "firebase_url": "https://piggy-pennies.firebaseio.com",
+    "project_id": "piggy-pennies",
+    "storage_bucket": "piggy-pennies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883904213865:android:2b402dc482cd09d32b83f8",
+        "android_client_info": {
+          "package_name": "com.example.piggy_pennies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883904213865-l9jnc4fgnfq20rrkcmsqc42nlerola7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-rhi0iFyZFDs_6BL0gOzcXQM4hPuUL_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883904213865-l9jnc4fgnfq20rrkcmsqc42nlerola7f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

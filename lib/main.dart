@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'service.dart/authentication_service.dart';
+import 'service.dart/childService.dart';
+import 'service.dart/firestore_service.dart';
 import 'ui/authentication/loginpage.dart';
 
 void main() {
@@ -10,6 +12,8 @@ void main() {
 }
 
 void setupLocator(){
+   GetIt.I.registerLazySingleton(()=> FirestoreService());
+   GetIt.I.registerLazySingleton(()=> ChildRegistrationService());
   GetIt.I.registerLazySingleton(()=> AuthenticationService());
 
 

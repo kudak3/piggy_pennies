@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/model/user.dart';
 
 class AuthenticationService {
-final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 //signup with email
@@ -67,40 +67,9 @@ final GoogleSignIn _googleSignIn = GoogleSignIn();
     }
   }
 
-//signup with google 
-  Future signUpWithGoogle() async {
-       try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-   final AuthCredential credential = GoogleAuthProvider.getCredential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
-
- final FirebaseUser user = (await _firebaseAuth.signInWithCredential(credential)).user;
-
-      if (user != null) {
-       
-         return APIResponse<User>(
-        error: false,
-        data: User(
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoUrl:user.photoUrl,
-        ),
-      );
-      
-      } else {
-        return  APIResponse<bool>(error: true, errorMessage: 'User registration failed');
-      }
 
      
-    } catch (e) {
-      return APIResponse<bool>(error: true, errorMessage: e.message);
-    }
-  }
+ 
 
 //signin
   Future loginWithEmail(String email, String password) async {
