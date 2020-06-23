@@ -154,8 +154,8 @@ class HomePageState extends State<HomePage> {
               child: Column(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text(currentUser.displayName),
-                accountEmail: Text(currentUser.email),
+                accountName: Text('username'),
+                accountEmail: Text('emailaccount'),
                 currentAccountPicture: CircleAvatar(
                   radius: 40,
                   child: Icon(Icons.person),
