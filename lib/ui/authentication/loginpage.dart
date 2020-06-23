@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
+import 'package:piggy_pennies/ui/child/child_home_page.dart';
 import 'package:piggy_pennies/ui/parent/choose_chore.dart';
 import 'package:piggy_pennies/ui/parent/homepage.dart';
 
@@ -145,6 +146,34 @@ class _LoginPageState extends State<LoginPage> {
                                   top: 16.0,
                                   bottom: 16.0),
                               child: Text('SignUp'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                          Container(
+                            margin:
+                            const EdgeInsets.symmetric(horizontal: 16.0),
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Colors.green,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ChildHome(),
+                                  ),
+                                );
+
+                              },
+                              padding: EdgeInsets.only(
+                                  left: 30.0,
+                                  right: 30.0,
+                                  top: 16.0,
+                                  bottom: 16.0),
+                              child: Text('Child Login'),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
