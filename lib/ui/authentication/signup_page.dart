@@ -62,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
                                     validator: _validateUsername,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.person,
-                                            color: Colors.green),
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Username",
                                         hintText:
                                             "Please Enter Your prefered username"),
@@ -79,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
                                     validator: _validateEmail,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.person,
-                                            color: Colors.green),
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Email",
                                         hintText:
                                             "Please Enter Your Email Address"),
@@ -97,7 +97,7 @@ class _SignupPageState extends State<SignupPage> {
                                     validator: _validatePassword,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.lock,
-                                            color: Colors.green),
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Password",
                                         hintText: "Enter A password"),
                                   ),
@@ -112,8 +112,8 @@ class _SignupPageState extends State<SignupPage> {
                                       confirmPassword = value;
                                     }),
                                     decoration: InputDecoration(
-                                        icon: Icon(Icons.lock,
-                                            color: Colors.green),
+                                        icon: Icon(Icons.phonelink_lock,
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Confirm Password",
                                         hintText: "Confirm your  password"),
                                   ),
@@ -128,7 +128,7 @@ class _SignupPageState extends State<SignupPage> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
                             child: RaisedButton(
-                              color: Colors.green,
+                              color: Color.fromRGBO(38, 131, 138,1),
                               textColor: Colors.white,
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {

@@ -80,7 +80,7 @@ class _ChooseChoreState extends State<ChooseChore> {
                             });
                           },
                           child: Stack(children: <Widget>[
-                            Image.asset(e.photoUrl),
+                            // Image.asset(e.photoUrl),
                              Positioned.fill(
                           bottom: 10.0,
                           child: Align(
