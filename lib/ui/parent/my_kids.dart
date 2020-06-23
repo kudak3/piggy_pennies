@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
+import 'package:piggy_pennies/service.dart/firestore_service.dart';
 import 'package:piggy_pennies/ui/authentication/child_reg.dart';
 import 'package:piggy_pennies/ui/parent/homepage.dart';
 
@@ -24,7 +25,15 @@ class _MyKidsState extends State<MyKids> {
 
   AuthenticationService get authenticationService =>
       GetIt.I<AuthenticationService>();
+        FirestoreService get firestoreService =>
+      GetIt.I<FirestoreService>();
   String email, password, confirmPassword, username;
+
+  @override
+  initState(){
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +55,8 @@ class _MyKidsState extends State<MyKids> {
                 child: Column(
                   children: <Widget>[
                     StreamBuilder(
-                        initialData: childlist,
-                        stream: childlist,
+                        initialData: firestoreService.getChildrenByParentId(),
+                        stream: firestoreService.getChildrenByParentId(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (!snapshot.hasData)

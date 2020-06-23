@@ -55,4 +55,16 @@ class FirestoreService {
       return APIResponse<bool>(error: true, errorMessage: e.message);
     }
   }
+
+  Stream<List<Child>> getChildrenByParentId() async*{
+      String ui = await authenticationService.currentUser();
+      List<Child> children;
+      
+    _childrenCollectionReference
+    .where("parentId", isEqualTo: ui)
+    .snapshots()
+    .listen((data) =>
+        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
+        yield children;
+  }
 }
