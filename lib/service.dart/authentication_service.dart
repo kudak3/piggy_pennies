@@ -9,6 +9,13 @@ class AuthenticationService {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+
+  Future  currentUser() async{
+       final FirebaseUser user = await _firebaseAuth.currentUser();
+    final uid = user.uid;
+    return uid;
+  }
+
 //signup with email
   Future signUpWithEmail(String email, String password, String username) async {
     try {

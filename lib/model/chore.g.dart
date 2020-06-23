@@ -15,6 +15,11 @@ Chore _$ChoreFromJson(Map<String, dynamic> json) {
     frequency: json['frequency'] as String,
     photoUrl: json['photoUrl'] as String,
     notes: json['notes'] as String,
+    createdBy: json['createdBy'] as String,
+    assignees: (json['assignees'] as List)
+        ?.map(
+            (e) => e == null ? null : Child.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
@@ -26,4 +31,6 @@ Map<String, dynamic> _$ChoreToJson(Chore instance) => <String, dynamic>{
       'frequency': instance.frequency,
       'photoUrl': instance.photoUrl,
       'notes': instance.notes,
+      'createdBy': instance.createdBy,
+      'assignees': instance.assignees?.map((e) => e?.toJson())?.toList(),
     };
