@@ -7,47 +7,12 @@ import 'package:piggy_pennies/ui/parent/chore_price.dart';
 
 import 'homepage.dart';
 
-class ChooseChore extends StatefulWidget {
-  _ChooseChoreState createState() => _ChooseChoreState();
+class Allowances extends StatefulWidget {
+  _AllowancesState createState() => _AllowancesState();
 }
 
-class _ChooseChoreState extends State<ChooseChore> {
-  String choreName;
-  List<Chore> choresList = [
-    Chore(
-      id: '1',
-      name: 'Brush teeth',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Feed pets',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Pull Laundry in Hamper',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Make bed',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Put away toys',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Clear the table',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Do Homework',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-    Chore(
-      name: 'Take out the table',
-      photoUrl: 'assets/icons/clean.png',
-    ),
-  ];
+class _AllowancesState extends State<Allowances> {
+  
 
     FirestoreService get firestoreService =>
       GetIt.I<FirestoreService>();
@@ -135,7 +100,7 @@ class _ChooseChoreState extends State<ChooseChore> {
                         textColor: Colors.white,
                         onPressed: () {
 
-                          _next();
+                          
                           // Navigator.push(
                           //   context,
                           //   MaterialPageRoute(
@@ -193,12 +158,6 @@ class _ChooseChoreState extends State<ChooseChore> {
         },
       );
 
-  _next() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ChorePrice(chorename: choreName),
-      ),
-    );
-  }
+  
+  
 }

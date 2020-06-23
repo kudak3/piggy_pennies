@@ -12,8 +12,11 @@ class AuthenticationService {
 
   Future  currentUser() async{
        final FirebaseUser user = await _firebaseAuth.currentUser();
-    final uid = user.uid;
-    return uid;
+       print("=============");
+       print(user.displayName);
+ User _user = User(displayName: user.displayName,email:user.email); 
+ print(_user);
+    return _user;
   }
 
 //signup with email
