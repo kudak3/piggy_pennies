@@ -165,7 +165,7 @@ class _ChildRegState extends State<ChildReg> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
                             child: RaisedButton(
-                              color: Colors.green,
+                              color: Color.fromRGBO(38, 131, 138,1),
                               textColor: Colors.white,
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
