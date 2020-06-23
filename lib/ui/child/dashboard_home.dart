@@ -44,12 +44,18 @@ class _ChildDashboard extends State<ChildDashboard> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Icon(Icons.calendar_today),
+              Icon(Icons.monetization_on),
               SizedBox(height: 5.0),
               Text("Amount: 200"),
             ],
           ),
-          Text("Due date: 12/07/20"),
+          Row(
+            children: <Widget>[
+              Icon(Icons.calendar_today),
+              SizedBox(height: 5.0),
+              Text("Due date: 12/07/20"),
+            ],
+          )
         ],
       ),
     );
@@ -70,12 +76,19 @@ class _ChildDashboard extends State<ChildDashboard> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Icon(Icons.calendar_today),
+              Icon(Icons.monetization_on),
               SizedBox(height: 5.0),
               Text("Amount: 16"),
             ],
           ),
-          Text("Due date: 12/07/20"),
+          Row(
+            children: <Widget>[
+              Icon(Icons.calendar_today),
+              SizedBox(height: 5.0),
+              Text("Due date: 12/07/20"),
+            ],
+          )
+
         ],
       ),
     );

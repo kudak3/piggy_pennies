@@ -38,6 +38,7 @@ class HomePageState extends State<HomePage> {
   getCurrentUser() async {
   setState(() async* {
      currentUser =await authenticationService.currentUser();
+
   });
    
     print(currentUser);
@@ -154,7 +155,7 @@ class HomePageState extends State<HomePage> {
               child: Column(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text(currentUser.displayName),
+                accountName: Text(''),
                 accountEmail: Text(currentUser.email),
                 currentAccountPicture: CircleAvatar(
                   radius: 40,
