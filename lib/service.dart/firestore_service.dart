@@ -69,7 +69,32 @@ class FirestoreService {
         yield children;
   }
 
+
+  Future getChildren() async{
+      User user = await authenticationService.currentUser();
+      List<Child> children;
+      
+    _childrenCollectionReference
+    .where("parentId", isEqualTo: user.uid)
+    .snapshots()
+    .listen((data) =>
+        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
+        return children;
+  }
+
    Stream<List<Child>> getAllowancesByChildId() async*{
+      String ui = await authenticationService.currentUser();
+      List<Child> children;
+      
+    _childrenCollectionReference
+    .where("parentId", isEqualTo: ui)
+    .snapshots()
+    .listen((data) =>
+        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
+        yield children;
+  }
+
+    Stream<List<Child>> getChores(String status,String childId) async*{
       String ui = await authenticationService.currentUser();
       List<Child> children;
       

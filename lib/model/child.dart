@@ -13,6 +13,7 @@ class Child{
   String gender;
   String parentId;
   String photoUrl;
+  double  balance;
 
 
 
@@ -23,12 +24,13 @@ class Child{
       this.gender,
       this.parentId,
       this.photoUrl,
+      this.balance,
      
      });
 
       @override
   String toString() {
-    return 'Child{uid:$uid,displayName:$fullName,birthDate:$birthDate,parentId:$parentId,photoUrl:$photoUrl,gender:$gender}';
+    return 'Child{uid:$uid,displayName:$fullName,birthDate:$birthDate,parentId:$parentId,photoUrl:$photoUrl,gender:$gender,balance:$balance}';
   }
 
 

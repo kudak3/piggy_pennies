@@ -23,94 +23,99 @@ class HomePageState extends State<HomePage> {
   Color active = Colors.grey.shade800;
   Color divider = Colors.grey.shade600;
 
+  Child currentSelectedChild;
+
   AuthenticationService get authenticationService =>
       GetIt.I<AuthenticationService>();
   User currentUser;
-    FirestoreService get firestoreService => GetIt.I<FirestoreService>();
+  Child selectedChild;
+  List<Child> children;
+  FirestoreService get firestoreService => GetIt.I<FirestoreService>();
+ 
+
+  List menuList = [
+    {'icon': 'assets/icons/target.png', 'title': 'Goal'},
+    {'icon': 'assets/icons/target.png', 'title': 'Chores'},
+    {'icon': 'assets/icons/target.png', 'title': 'Balance'},
+    {'icon': 'assets/icons/target.png', 'title': 'Message'},
+  
+  ];
 
   @override
   void initState() {
     getCurrentUser();
+    getChildren();
 
     super.initState();
   }
 
-  getCurrentUser() async {
-  setState(() async* {
-     currentUser =await authenticationService.currentUser();
-  });
-   
-    print(currentUser);
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: _buildDrawer(),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 200.0,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('Piggy Pennies'),
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(38, 131, 138,1),
+        title: Text('Piggie Pennies'),
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: Color.fromRGBO(38, 131, 138,1),
+              height: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                
+                     
+                      Row(mainAxisAlignment: MainAxisAlignment.end,
+                        children: children.map((e) => Row(children: <Widget>[ CircleAvatar(child: Text('KK'),),
+                        SizedBox(width:10),
+                        
+                        ],)).toList()
+                       
+                      ),
+                        CircleAvatar(child: Text('KK'),),
+                  
+                   SizedBox(height: 20,),
+                  Text(selectedChild != null ? selectedChild:"Ammie",style: TextStyle(color: Colors.white,fontSize: 20,),),
+                  SizedBox(height: 10,),
+                  Text(selectedChild != null ? selectedChild.balance:"\$20.00",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
+                  SizedBox(height: 20,),
+                ],
+              ),
             ),
-          ),
-          SliverFillRemaining(
-            child:  Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.only(
-            top: 10, left: 16.0, right: 16.0, bottom: 10.0),
-        child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    StreamBuilder(
-                        initialData: firestoreService.getChildrenByParentId(),
-                        stream: firestoreService.getChildrenByParentId(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              childAspectRatio: 1.1,
+              children: menuList.map((e) => Card(
+                      child: Center(
 
-                          List<Child> children = snapshot.data;
-                          return listView(children);
-                        }),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                      width: double.infinity,
-                      child: RaisedButton(
-                        color: Colors.green,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => ChildReg(),
-                            ),
-                          );
-                        },
-                        padding: EdgeInsets.only(
-                            left: 30.0, right: 30.0, top: 16.0, bottom: 16.0),
-                        child: Text('Add a Child'),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                        child: InkWell(
+                          onTap: () {
+                          
+                          },
+                          child: Column(children: <Widget>[
+                            Image.asset(e['icon'],height: 100,width:100,),
+                            Text(e['title'])
+                          ]),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-      ),
-          )
-        ],
+                    )).toList()
+              
+            ),
+          ],
+        ),
       ),
     );
   }
 
-   listView(List<Child> children) => ListView.builder(
+  listView(List<Child> children) => ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
         scrollDirection: Axis.vertical,
         itemCount: children.length,
@@ -141,7 +146,6 @@ class HomePageState extends State<HomePage> {
         },
       );
 
-
   _buildDrawer() {
     return Drawer(
       child: Container(
@@ -154,8 +158,8 @@ class HomePageState extends State<HomePage> {
               child: Column(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text('username'),
-                accountEmail: Text('emailaccount'),
+                accountName: Text(currentUser.displayName),
+                accountEmail: Text(currentUser.email),
                 currentAccountPicture: CircleAvatar(
                   radius: 40,
                   child: Icon(Icons.person),
@@ -261,4 +265,20 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  getCurrentUser() async {
+    var u = await authenticationService.currentUser();
+    setState(() {
+      currentUser = u;
+    });
+  }
+
+  getChildren() async{
+       var tmp = await firestoreService.getChildren();
+    setState(() {
+      children = tmp;
+      selectedChild = tmp[0];
+    });
+  }
+
 }
