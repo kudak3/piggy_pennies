@@ -6,6 +6,7 @@ import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/model/chore.dart';
 import 'package:piggy_pennies/model/user.dart';
 
+import '../model/chore.dart';
 import 'authentication_service.dart';
 
 class FirestoreService {
@@ -15,12 +16,11 @@ class FirestoreService {
   final CollectionReference _childrenCollectionReference =
       Firestore.instance.collection("children");
 
-      final CollectionReference _choresCollectionReference =
+  final CollectionReference _choresCollectionReference =
       Firestore.instance.collection("chores");
 
-        AuthenticationService get authenticationService =>
+  AuthenticationService get authenticationService =>
       GetIt.I<AuthenticationService>();
-
 
   Future createUser(User user) async {
     try {
@@ -42,10 +42,10 @@ class FirestoreService {
     }
   }
 
-    Future registerChore(Chore chore) async {
-      String ui = await authenticationService.currentUser();
-      chore.createdBy = ui;
-        
+  Future registerChore(Chore chore) async {
+    String ui = await authenticationService.currentUser();
+    chore.createdBy = ui;
+
     try {
       await _choresCollectionReference
           .document(chore.id)
@@ -57,52 +57,62 @@ class FirestoreService {
     }
   }
 
-  Stream<List<Child>> getChildrenByParentId() async*{
-      User user = await authenticationService.currentUser();
-      List<Child> children;
-      
+  Stream<List<Child>> getChildrenByParentId() async* {
+    User user = await authenticationService.currentUser();
+    List<Child> children;
+
     _childrenCollectionReference
-    .where("parentId", isEqualTo: user.uid)
-    .snapshots()
-    .listen((data) =>
-        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
-        yield children;
+        .where("parentId", isEqualTo: user.uid)
+        .snapshots()
+        .listen((data) => data.documents
+            .forEach((doc) => children.add(Child.fromJson(doc.data))));
+    yield children;
   }
 
+  Future getChildren() async {
+    User user = await authenticationService.currentUser();
+    List<Child> children;
 
-  Future getChildren() async{
-      User user = await authenticationService.currentUser();
-      List<Child> children;
-      
     _childrenCollectionReference
-    .where("parentId", isEqualTo: user.uid)
-    .snapshots()
-    .listen((data) =>
-        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
-        return children;
+        .where("parentId", isEqualTo: user.uid)
+        .snapshots()
+        .listen((data) => data.documents
+            .forEach((doc) => children.add(Child.fromJson(doc.data))));
+    return children;
   }
 
-   Stream<List<Child>> getAllowancesByChildId() async*{
-      String ui = await authenticationService.currentUser();
-      List<Child> children;
-      
+  Stream<List<Child>> getAllowancesByChildId() async* {
+    String ui = await authenticationService.currentUser();
+    List<Child> children;
+
     _childrenCollectionReference
-    .where("parentId", isEqualTo: ui)
-    .snapshots()
-    .listen((data) =>
-        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
-        yield children;
+        .where("parentId", isEqualTo: ui)
+        .snapshots()
+        .listen((data) => data.documents
+            .forEach((doc) => children.add(Child.fromJson(doc.data))));
+    yield children;
   }
 
-    Stream<List<Child>> getChores(String status,String childId) async*{
-      String ui = await authenticationService.currentUser();
-      List<Child> children;
-      
+  Stream<List<Child>> getChores(String status, String childId) async* {
+    String ui = await authenticationService.currentUser();
+    List<Child> children;
+
     _childrenCollectionReference
-    .where("parentId", isEqualTo: ui)
-    .snapshots()
-    .listen((data) =>
-        data.documents.forEach((doc) => children.add(Child.fromJson(doc.data))));
-        yield children;
+        .where("parentId", isEqualTo: ui)
+        .snapshots()
+        .listen((data) => data.documents
+            .forEach((doc) => children.add(Child.fromJson(doc.data))));
+    yield children;
+    Stream<List<Chore>> getChoresByChild(Child child) async* {
+//    String ui = await authenticationService.currentUser();
+      List<Chore> chores;
+
+      _choresCollectionReference
+          .where("assignee", arrayContains: child)
+          .snapshots()
+          .listen((data) => data.documents
+              .forEach((doc) => chores.add(Chore.fromJson(doc.data))));
+      yield chores;
+    }
   }
 }

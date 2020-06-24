@@ -85,7 +85,7 @@ class _ChooseChoreState extends State<ChooseChore> {
                           bottom: 10.0,
                           child: Align(
                             alignment: Alignment.bottomCenter,
-                            child:  Text(e.name,style: TextStyle(fontSize: 14,color: Colors.black,fontWeight: FontWeight.bold),),
+                            child:  Text(e.name,style: TextStyle(fontSize: 14,color: Colors.yellow,fontWeight: FontWeight.bold),),
                           ),
                         )
                               ]),
