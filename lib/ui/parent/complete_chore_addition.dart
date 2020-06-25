@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
+import 'package:piggy_pennies/model/allowance.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/model/chore.dart';
@@ -24,6 +25,8 @@ class _AddChoreState extends State<AddChore> {
   String frequency;
   String notes;
   bool _isLoading = false;
+
+  Allowance allowance;
 
   List<Child> children;
   List<Child> assignees = [];
@@ -95,6 +98,7 @@ class _AddChoreState extends State<AddChore> {
                                 children: <Widget>[
                                   GestureDetector(
                                       onTap: () {
+                                        createAllowance(Allowance(child: e,paid: false,choreName: widget.choreName,amount:widget.price));
                                         setState(() {
                                           assignees.contains(e)
                                               ? assignees.remove(e)
@@ -186,6 +190,10 @@ class _AddChoreState extends State<AddChore> {
       children = tmp;
     });
     print('======children are hre====');
+  }
+
+  createAllowance(Allowance allowance) async{
+    await firestoreService.createAllowance(allowance);
   }
 
   _next() async {

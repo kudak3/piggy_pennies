@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:piggy_pennies/model/chore.dart';
+
 
 import 'complete_chore_addition.dart';
 

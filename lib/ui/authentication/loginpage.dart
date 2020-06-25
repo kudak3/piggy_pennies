@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get_it/get_it.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piggy_pennies/model/api_response.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
-import 'package:piggy_pennies/ui/child/child_auth.dart';
-import 'package:piggy_pennies/ui/child/child_home_page.dart';
-import 'package:piggy_pennies/ui/parent/choose_chore.dart';
-import 'package:piggy_pennies/ui/parent/homepage.dart';
 
+
+import '../landingpage.dart';
 import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -194,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => HomePage(),
+          builder: (_) => LandingPage(),
         ),
       );
     } else {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:piggy_pennies/model/allowance.dart';
+
 import 'package:piggy_pennies/model/chore.dart';
 import 'package:piggy_pennies/service.dart/firestore_service.dart';
-import 'package:piggy_pennies/ui/parent/chore_price.dart';
 
-import 'homepage.dart';
 
 class ChildChores extends StatefulWidget {
   final String childId;

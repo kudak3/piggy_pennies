@@ -14,6 +14,7 @@ Child _$ChildFromJson(Map<String, dynamic> json) {
     gender: json['gender'] as String,
     parentId: json['parentId'] as String,
     photoUrl: json['photoUrl'] as String,
+    balance: (json['balance'] as num)?.toDouble(),
   );
 }
 
@@ -24,4 +25,5 @@ Map<String, dynamic> _$ChildToJson(Child instance) => <String, dynamic>{
       'gender': instance.gender,
       'parentId': instance.parentId,
       'photoUrl': instance.photoUrl,
+      'balance': instance.balance,
     };

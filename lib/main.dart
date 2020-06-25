@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Piggy Pennies',
       theme: ThemeData(
-        
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromRGBO(38, 131, 138,1),
+      
      
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

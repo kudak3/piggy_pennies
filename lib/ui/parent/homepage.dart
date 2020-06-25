@@ -4,7 +4,7 @@ import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/model/user.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
 import 'package:piggy_pennies/service.dart/firestore_service.dart';
-import 'package:piggy_pennies/ui/authentication/child_reg.dart';
+
 
 import 'allowances.dart';
 import 'my_kids.dart';
@@ -29,7 +29,7 @@ class HomePageState extends State<HomePage> {
       GetIt.I<AuthenticationService>();
   User currentUser;
   Child selectedChild;
-  List<Child> children;
+  List<Child> children =[];
   FirestoreService get firestoreService => GetIt.I<FirestoreService>();
 
   List menuList = [

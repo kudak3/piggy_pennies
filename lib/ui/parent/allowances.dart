@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:piggy_pennies/model/allowance.dart';
-import 'package:piggy_pennies/model/chore.dart';
-import 'package:piggy_pennies/service.dart/firestore_service.dart';
-import 'package:piggy_pennies/ui/parent/chore_price.dart';
 
-import 'homepage.dart';
+import 'package:piggy_pennies/service.dart/firestore_service.dart';
+
 
 class Allowances extends StatefulWidget {
+
+  final String name;
+
+  Allowances({this.name});
   _AllowancesState createState() => _AllowancesState();
 }
 
 class _AllowancesState extends State<Allowances> {
-  
+    List<Allowance> allowances = [];
 
     FirestoreService get firestoreService =>
       GetIt.I<FirestoreService>();
+
+      @override
+  void initState() {
+    getAllowances();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +44,9 @@ class _AllowancesState extends State<Allowances> {
                 SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    StreamBuilder(
-                        initialData: firestoreService.getAllowancesByChildId(),
-                        stream: firestoreService.getAllowancesByChildId(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
-
-                          List<Allowance> allowances = snapshot.data;
-                          return listView(allowances);
-                        }),
+                   
+                          Container(child:listView(allowances)),
+                        
                     SizedBox(
                       height: 10.0,
                     ),
@@ -78,17 +78,9 @@ class _AllowancesState extends State<Allowances> {
                SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    StreamBuilder(
-                        initialData: firestoreService.getAllowancesByChildId(),
-                        stream: firestoreService.getAllowancesByChildId(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
-
-                          List<Allowance> allowances = snapshot.data;
-                          return listView(allowances);
-                        }),
+                    
+                        Container(child:listView(allowances),),
+                      
                     SizedBox(
                       height: 10.0,
                     ),
@@ -159,5 +151,12 @@ class _AllowancesState extends State<Allowances> {
       );
 
   
+   getAllowances() async {
+    var tmp = await firestoreService.getAllowances(widget.name);
+
+    setState(() {
+      allowances = tmp;
+        });
+  }
   
 }

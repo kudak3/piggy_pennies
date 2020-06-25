@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get_it/get_it.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:piggy_pennies/model/api_response.dart';
+
+import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
-import 'package:piggy_pennies/ui/child/child_auth.dart';
-import 'package:piggy_pennies/ui/child/child_home_page.dart';
-import 'package:piggy_pennies/ui/parent/choose_chore.dart';
+import 'package:piggy_pennies/service.dart/firestore_service.dart';
+
+
 import 'package:piggy_pennies/ui/parent/homepage.dart';
+
+import 'child/childhome.dart';
 
 
 class LandingPage extends StatefulWidget {
@@ -20,7 +23,25 @@ class _LoginPageState extends State<LandingPage> {
   bool _autoValidate = false;
   bool _isLoading = false;
 
-  final TextEditingController _pass = TextEditingController();
+
+
+    List<Child> children =[];
+  FirestoreService get firestoreService => GetIt.I<FirestoreService>();
+
+@override
+initState(){
+  getChildren();
+  super.initState();
+}
+
+  getChildren() async {
+    var tmp = await firestoreService.getChildren();
+
+    setState(() {
+      children = tmp;
+     
+    });
+  }
 
   AuthenticationService get authenticationService =>
       GetIt.I<AuthenticationService>();
@@ -75,45 +96,58 @@ class _LoginPageState extends State<LandingPage> {
                                   right: 30.0,
                                   top: 16.0,
                                   bottom: 16.0),
-                              child: Text('Parent'),
+                              child: Text('Continue as Parent'),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                           ),
                           const SizedBox(height: 20.0),
+                          
                           Container(
+                            
+                            height: 100,
                             margin:
                             const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
-                            child: RaisedButton(
-                              color: Color.fromRGBO(38, 131, 138,1),
-                              textColor: Colors.white,
-                              onPressed: () {
-                                Navigator.push(
+                            child: 
+                            
+                            Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: children
+                              .map((e) => Row(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                        
+                                           Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => ChildHome(),
+                                    builder: (_) => ChildHome(child: e,),
                                   ),
                                 );
-
-                              },
-                              padding: EdgeInsets.only(
-                                  left: 30.0,
-                                  right: 30.0,
-                                  top: 16.0,
-                                  bottom: 16.0),
-                              child: Text('Child'),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
+                                        },
+                                        child: CircleAvatar(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor:  Color.fromRGBO(38, 131, 138,1),
+                                          radius: 30.0,
+                                          child:
+                                              Text(e.fullName.substring(0, 2)),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ))
+                              .toList()),
+                            
+                            
+                          
                           ),
                        
                               ],
                             ),
                           ),
-                          const SizedBox(height: 20.0),
+                         
                          
                        
                          
@@ -127,47 +161,7 @@ class _LoginPageState extends State<LandingPage> {
     );
   }
 
-  String _validateEmail(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Enter Valid Email';
-    else
-      return null;
-  }
-
-  String _validatePassword(String value) {
-    if (value.length < 8)
-      return 'Passwords must have a minimum of 8 characters';
-    else
-      return null;
-  }
-
-  _signIn() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    APIResponse result =
-        await authenticationService.signInWithEmail(email, password);
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (!result.error) {
-      await showToast("Login successful");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => HomePage(),
-        ),
-      );
-    } else {
-      showToast(result.errorMessage);
-    }
-  }
+  
 
   showToast(String msg) {
     Fluttertoast.showToast(

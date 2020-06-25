@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:piggy_pennies/ui/child/widgets/bottom_drawer.dart';
-import 'package:piggy_pennies/ui/child/widgets/side_drawer.dart';
+
 
 import '../../model/child.dart';
 import '../../model/chore.dart';
-import '../../model/chore.dart';
-import '../../model/goal.dart';
+
+
 import '../../service.dart/authentication_service.dart';
 import '../../service.dart/firestore_service.dart';
 
@@ -31,11 +30,6 @@ class _ChildAuth extends State<ChildAuth> {
   List<Child> childList = [];
    List<Child> children;
 
-  Widget viewProfileCard (){
-
-    // choresList.add(new Chore(id:"1",name:'example',price:"50",dueDate:'12-01-12',frequency:"very",photoUrl:"jp/op",notes:"urgent"));
-
-  }
 
    getChildren() async {
     var tmp = await firestoreService.getChildren();
@@ -61,7 +55,7 @@ class _ChildAuth extends State<ChildAuth> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+ 
     return Scaffold(
       body:Column(
         children: [
@@ -115,8 +109,5 @@ class _ChildAuth extends State<ChildAuth> {
     },
   );
 
-  @override
-  void initState() {
-    //pull chores and populate chore list
-  }
+
 }
