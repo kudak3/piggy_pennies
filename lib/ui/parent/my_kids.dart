@@ -18,6 +18,7 @@ class MyKids extends StatefulWidget {
 
 class _MyKidsState extends State<MyKids> {
   Stream<List<Child>> childlist;
+  List<Child> children;
 
   bool _isLoading = false;
 
@@ -31,9 +32,22 @@ class _MyKidsState extends State<MyKids> {
 
   @override
   initState(){
-
+getChildren();
+print(children);
     super.initState();
   }
+
+ getChildren() async {
+    var tmp = await firestoreService.getChildren();
+
+    setState(() {
+      children = tmp;
+    
+    });
+  }
+
+   
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +56,9 @@ class _MyKidsState extends State<MyKids> {
         title: Text("My Kids"),
       ),
       body: Container(
-        alignment: Alignment.center,
+        
         margin: const EdgeInsets.only(
-            top: 10, left: 16.0, right: 16.0, bottom: 10.0),
+            top: 50, left: 16.0, right: 16.0, bottom: 10.0),
         child: _isLoading
             ? Center(
                 child: Padding(
@@ -54,31 +68,24 @@ class _MyKidsState extends State<MyKids> {
             : SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    StreamBuilder(
-                        initialData: firestoreService.getChildrenByParentId(),
-                        stream: firestoreService.getChildrenByParentId(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
-
-                          List<Child> children = snapshot.data;
-                          return listView(children);
-                        }),
+                    
+                         Container(height: 300,child:listView(children))
+                        ,
                     SizedBox(
                       height: 10.0,
                     ),
                     Container(
+                      
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
                       width: double.infinity,
                       child: RaisedButton(
-                        color: Colors.green,
+                        color: Color.fromRGBO(38, 131, 138,1),
                         textColor: Colors.white,
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => ChildReg(),
+                              builder: (_) => ChildReg(newacc: false,),
                             ),
                           );
                         },

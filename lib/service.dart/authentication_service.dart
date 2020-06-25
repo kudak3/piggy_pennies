@@ -13,7 +13,7 @@ class AuthenticationService {
   Future  currentUser() async{
        final FirebaseUser user = await _firebaseAuth.currentUser();
  
- User _user = User(displayName: user.displayName,email:user.email); 
+ User _user = User(uid: user.uid,displayName: user.displayName,email:user.email); 
 
     return _user;
   }

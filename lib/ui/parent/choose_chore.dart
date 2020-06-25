@@ -78,14 +78,15 @@ class _ChooseChoreState extends State<ChooseChore> {
                             setState(() {
                               choreName = e.name;
                             });
+                             _next();
                           },
                           child: Stack(children: <Widget>[
                             // Image.asset(e.photoUrl),
                              Positioned.fill(
                           bottom: 10.0,
                           child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child:  Text(e.name,style: TextStyle(fontSize: 14,color: Colors.yellow,fontWeight: FontWeight.bold),),
+                            alignment: Alignment.center,
+                            child:  Text(e.name,style: TextStyle(fontSize: 14,color: Colors.black,fontWeight: FontWeight.bold),),
                           ),
                         )
                               ]),
@@ -95,23 +96,7 @@ class _ChooseChoreState extends State<ChooseChore> {
                     .toList(),
               ),
               SizedBox(height: 20.0,),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                width: double.infinity,
-                child: RaisedButton(
-                  color: Colors.green,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    _next();
-                  },
-                  padding: EdgeInsets.only(
-                      left: 30.0, right: 30.0, top: 16.0, bottom: 16.0),
-                  child: Text('Next'),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-              ),
+            
             ],
           ),
         ),

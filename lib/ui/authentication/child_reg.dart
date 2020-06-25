@@ -80,7 +80,7 @@ class _ChildRegState extends State<ChildReg> {
                                       });
                                     },
                                     elevation: 2.0,
-                                    fillColor: Colors.white,
+                                    fillColor:  Color.fromRGBO(38, 131, 138,0.5),
                                     child: Text('Boy'),
                                     padding: EdgeInsets.all(20.0),
                                     shape: CircleBorder(),
@@ -88,10 +88,11 @@ class _ChildRegState extends State<ChildReg> {
                                   RawMaterialButton(
                                     onPressed: () {},
                                     elevation: 2.0,
-                                    fillColor: Colors.white,
+                                    fillColor:  Color.fromRGBO(38, 131, 138,1),
                                     child: Icon(
                                       Icons.camera_alt,
                                       size: 35.0,
+                                      color: Colors.white,
                                     ),
                                     padding: EdgeInsets.all(30.0),
                                     shape: CircleBorder(),
@@ -101,7 +102,7 @@ class _ChildRegState extends State<ChildReg> {
                                       gender = 'Female';
                                     },
                                     elevation: 2.0,
-                                    fillColor: Colors.white,
+                                    fillColor:  Color.fromRGBO(38, 131, 138,0.5),
                                     child: Text('Girl'),
                                     padding: EdgeInsets.all(20.0),
                                     shape: CircleBorder(),
@@ -128,7 +129,7 @@ class _ChildRegState extends State<ChildReg> {
                                         validator: _validateUsername,
                                         decoration: InputDecoration(
                                             icon: Icon(Icons.person,
-                                                color: Colors.green),
+                                                color:  Color.fromRGBO(38, 131, 138,1)),
                                             labelText: "Name",
                                             hintText:
                                                 "Enter the name of the Child"),
@@ -148,7 +149,7 @@ class _ChildRegState extends State<ChildReg> {
                                                 : selectedDate),
                                         decoration: InputDecoration(
                                             icon: Icon(Icons.calendar_today,
-                                                color: Colors.blue),
+                                                color:  Color.fromRGBO(38, 131, 138,1)),
                                             labelText: "D.O.B",
                                             hintText: "Date Of Birth"),
                                       ),
@@ -225,7 +226,8 @@ class _ChildRegState extends State<ChildReg> {
     });
 
     APIResponse result = await firestoreService.registerChild(Child(
-        parentId: widget.parent, birthDate: selectedDate, gender: gender));
+      fullName: name,
+        birthDate: selectedDate, gender: gender));
 
     setState(() {
       _isLoading = false;

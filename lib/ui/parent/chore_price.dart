@@ -23,9 +23,9 @@ class _ChorePriceState extends State<ChorePrice> {
         title: Text('Price and Duration'),
       ),
       body: Container(
-        alignment: Alignment.center,
+        
         margin: const EdgeInsets.only(
-            top: 10, left: 16.0, right: 16.0, bottom: 10.0),
+            top: 50, left: 16.0, right: 16.0, bottom: 0),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -45,13 +45,14 @@ class _ChorePriceState extends State<ChorePrice> {
                       price = value;
                     }),
                     // validator: _validatePassword,
+                    
                     decoration: InputDecoration(
-                        icon: Icon(Icons.lock, color: Colors.green),
+                        icon: Icon(Icons.attach_money, color: Color.fromRGBO(38, 131, 138,1)),
                         labelText: "Price",
                         hintText: "Enter Amount"),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 30.0),
                 Text(
                   'Pick a Due date',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -73,22 +74,23 @@ class _ChorePriceState extends State<ChorePrice> {
                     controller: TextEditingController(
                         text: selectedDate == "" ? null : selectedDate),
                     decoration: InputDecoration(
-                        icon: Icon(Icons.calendar_today, color: Colors.blue),
-                        labelText: "D.O.B",
+                        icon: Icon(Icons.calendar_today, color: Color.fromRGBO(38, 131, 138,1)),
+                        labelText: "Due date",
                         hintText: "Date Of Birth"),
                   ),
                 ),
+                SizedBox(height:30.0),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   width: double.infinity,
                   child: RaisedButton(
-                    color: Colors.green,
+                    color: Color.fromRGBO(38, 131, 138,1),
                     textColor: Colors.white,
                     onPressed: () {
                       _next();
                     },
                     padding: EdgeInsets.only(
-                        left: 30.0, right: 30.0, top: 16.0, bottom: 16.0),
+                        left: 40.0, right: 30.0, top: 16.0, bottom: 16.0),
                     child: Text('Next'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),

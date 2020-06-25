@@ -31,14 +31,12 @@ class HomePageState extends State<HomePage> {
   Child selectedChild;
   List<Child> children;
   FirestoreService get firestoreService => GetIt.I<FirestoreService>();
- 
 
   List menuList = [
     {'icon': 'assets/icons/target.png', 'title': 'Goal'},
     {'icon': 'assets/icons/target.png', 'title': 'Chores'},
     {'icon': 'assets/icons/target.png', 'title': 'Balance'},
     {'icon': 'assets/icons/target.png', 'title': 'Message'},
-  
   ];
 
   @override
@@ -49,15 +47,12 @@ class HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: _buildDrawer(),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(38, 131, 138,1),
+        backgroundColor: Color.fromRGBO(38, 131, 138, 1),
         title: Text('Piggie Pennies'),
         elevation: 0,
       ),
@@ -65,51 +60,80 @@ class HomePageState extends State<HomePage> {
         child: Column(
           children: <Widget>[
             Container(
-              color: Color.fromRGBO(38, 131, 138,1),
-              height: 200,
+              color: Color.fromRGBO(38, 131, 138, 1),
+              height: children ==null ? 100 :200,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                
-                     
-                      Row(mainAxisAlignment: MainAxisAlignment.end,
-                        children: children.map((e) => Row(children: <Widget>[ CircleAvatar(child: Text('KK'),),
-                        SizedBox(width:10),
-                        
-                        ],)).toList()
-                       
-                      ),
-                        CircleAvatar(child: Text('KK'),),
-                  
-                   SizedBox(height: 20,),
-                  Text(selectedChild != null ? selectedChild:"Ammie",style: TextStyle(color: Colors.white,fontSize: 20,),),
-                  SizedBox(height: 10,),
-                  Text(selectedChild != null ? selectedChild.balance:"\$20.00",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
-                  SizedBox(height: 20,),
+                  children == null
+                      ? Container(height: 0, width: 0)
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: children
+                              .map((e) => Row(
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                        child: Text(e.fullName.substring(0,2)),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ))
+                              .toList()),
+                  selectedChild != null
+                      ? CircleAvatar(
+                        radius: 30,
+                          child: Text(selectedChild.fullName.substring(0,2).toUpperCase(),style: TextStyle(fontSize: 40),),
+                        )
+                      : Container(height: 0, width: 0),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    selectedChild != null ? selectedChild.fullName : "",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                      selectedChild != null
+                          ? "\$" + selectedChild.balance.toString()
+                          : "",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),
             GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              childAspectRatio: 1.1,
-              children: menuList.map((e) => Card(
-                      child: Center(
-
-                        child: InkWell(
-                          onTap: () {
-                          
-                          },
-                          child: Column(children: <Widget>[
-                            Image.asset(e['icon'],height: 100,width:100,),
-                            Text(e['title'])
-                          ]),
-                        ),
-                      ),
-                    )).toList()
-              
-            ),
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                childAspectRatio: 1.1,
+                children: menuList
+                    .map((e) => Card(
+                          child: Center(
+                            child: InkWell(
+                              onTap: () {},
+                              child: Column(children: <Widget>[
+                                Image.asset(
+                                  e['icon'],
+                                  height: 100,
+                                  width: 100,
+                                ),
+                                Text(e['title'])
+                              ]),
+                            ),
+                          ),
+                        ))
+                    .toList()),
           ],
         ),
       ),
@@ -274,12 +298,12 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  getChildren() async{
-       var tmp = await firestoreService.getChildren();
+  getChildren() async {
+    var tmp = await firestoreService.getChildren();
+
     setState(() {
       children = tmp;
       selectedChild = tmp[0];
     });
   }
-
 }

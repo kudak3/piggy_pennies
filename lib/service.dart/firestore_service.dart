@@ -31,9 +31,15 @@ class FirestoreService {
   }
 
   Future registerChild(Child child) async {
+    User u = await authenticationService.currentUser();
+    print("user id =====");
+    print(u.uid);
+    child.parentId = u.uid;
+    print("parent id ====");
+    print(child.parentId);
     try {
       await _childrenCollectionReference
-          .document(child.uid)
+          .document(child.fullName)
           .setData(child.toJson());
 
       return APIResponse<bool>(error: false);
@@ -43,12 +49,15 @@ class FirestoreService {
   }
 
   Future registerChore(Chore chore) async {
+     print("=============chore ==");
     String ui = await authenticationService.currentUser();
     chore.createdBy = ui;
+    print("=============chore ==");
+    print(chore);
 
     try {
       await _choresCollectionReference
-          .document(chore.id)
+          .document(chore.name)
           .setData(chore.toJson());
 
       return APIResponse<bool>(error: false);
@@ -57,28 +66,45 @@ class FirestoreService {
     }
   }
 
-  Stream<List<Child>> getChildrenByParentId() async* {
-    User user = await authenticationService.currentUser();
-    List<Child> children;
+  // Stream<List<Child>> getChildrenByParentId() async* {
+  //   User user = await authenticationService.currentUser();
+  //   List<Child> children;
 
-    _childrenCollectionReference
-        .where("parentId", isEqualTo: user.uid)
-        .snapshots()
-        .listen((data) => data.documents
-            .forEach((doc) => children.add(Child.fromJson(doc.data))));
-    yield children;
-  }
+    
+
+  //   _childrenCollectionReference
+  //       .where("parentId", isEqualTo: user.uid)
+  //       .snapshots()
+  //       .listen((data) => data.documents
+  //           .forEach((doc) => children.add(Child.fromJson(doc.data))));
+  //   yield children;
+  // }
 
   Future getChildren() async {
     User user = await authenticationService.currentUser();
-    List<Child> children;
+    print('userid =====');
+    
+    List<Child> children = [];
 
-    _childrenCollectionReference
-        .where("parentId", isEqualTo: user.uid)
-        .snapshots()
-        .listen((data) => data.documents
-            .forEach((doc) => children.add(Child.fromJson(doc.data))));
-    return children;
+    QuerySnapshot querySnapShot = await _childrenCollectionReference.where("parentId", isEqualTo: user.uid).getDocuments();
+ print('userid =====list');
+print(querySnapShot.documents.map((e) => Child.fromJson(e.data), ).toList());
+
+return querySnapShot.documents.map((e) => Child.fromJson(e.data), ).toList();
+  //  _childrenCollectionReference
+  //       .where("parentId", isEqualTo: user.uid)
+  //       .snapshots()
+  //       .listen(
+  //         (data) => data.documents.forEach(
+  //           (doc) => 
+  //           children.add(
+  //             Child.fromJson(doc.data),
+  //           ),
+  //         ),
+  //       );
+  //   print("===============================================");
+  //   print(children);
+  //   return children;
   }
 
   Stream<List<Child>> getAllowancesByChildId() async* {

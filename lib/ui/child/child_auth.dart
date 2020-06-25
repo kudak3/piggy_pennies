@@ -28,12 +28,35 @@ class _ChildAuth extends State<ChildAuth> {
   //pull list of chores
   Chore chore;
   List<Chore> choresList;
+  List<Child> childList = [];
+   List<Child> children;
 
   Widget viewProfileCard (){
 
     // choresList.add(new Chore(id:"1",name:'example',price:"50",dueDate:'12-01-12',frequency:"very",photoUrl:"jp/op",notes:"urgent"));
 
   }
+
+   getChildren() async {
+    var tmp = await firestoreService.getChildren();
+
+    setState(() {
+      children = tmp;
+    
+    });
+  }
+
+    Stream<List<Child>> list() async*{
+      
+        
+        
+
+           
+
+          yield children;
+      
+        }
+
 
 
   @override
@@ -48,8 +71,8 @@ class _ChildAuth extends State<ChildAuth> {
             child: Column(
               children: <Widget>[
                 StreamBuilder(
-                    initialData: firestoreService.getChildrenByParentId(),
-                    stream: firestoreService.getChildrenByParentId(),
+                    initialData: list(),
+                    stream: list(),
                     builder:
                         (BuildContext context, AsyncSnapshot snapshot) {
                       if (!snapshot.hasData)

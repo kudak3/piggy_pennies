@@ -16,6 +16,7 @@ class Chore{
   String photoUrl;
   String notes;
   String createdBy;
+  String status;
   List<Child> assignees;
 
 
@@ -29,13 +30,14 @@ class Chore{
       this.photoUrl,
       this.notes,
       this.createdBy,
+      this.status,
       this.assignees,
      
      });
 
       @override
   String toString() {
-    return 'Chore{id:$id,name:$name,price:$price,frequency:$frequency,photoUrl:$photoUrl}';
+    return 'Chore{id:$id,name:$name,price:$price,frequency:$frequency,photoUrl:$photoUrl,status:$status}';
   }
 
 
