@@ -50,8 +50,8 @@ class FirestoreService {
 
   Future registerChore(Chore chore) async {
      print("=============chore ==");
-    String ui = await authenticationService.currentUser();
-    chore.createdBy = ui;
+    User ui = await authenticationService.currentUser();
+    chore.createdBy = ui.uid;
     print("=============chore ==");
     print(chore);
 

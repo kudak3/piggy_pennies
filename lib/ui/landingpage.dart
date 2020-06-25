@@ -10,13 +10,12 @@ import 'package:piggy_pennies/ui/child/child_home_page.dart';
 import 'package:piggy_pennies/ui/parent/choose_chore.dart';
 import 'package:piggy_pennies/ui/parent/homepage.dart';
 
-import 'signup_page.dart';
 
-class LoginPage extends StatefulWidget {
+class LandingPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LandingPage> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   bool _isLoading = false;
@@ -53,75 +52,9 @@ class _LoginPageState extends State<LoginPage> {
                             elevation: 5.0,
                             child: Column(
                               children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      10.0, 0.0, 20.0, 8.0),
-                                  child: TextFormField(
-                                    onSaved: (value) => setState(() {
-                                      email = value;
-                                    }),
-                                    validator: _validateEmail,
-                                    decoration: InputDecoration(
-                                        icon: Icon(Icons.person,
-                                            color: Color.fromRGBO(38, 131, 138,1)),
-                                        labelText: "Email",
-                                        hintText:
-                                            "Please Enter Your Email Address"),
-                                  ),
-                                ),
+                               
                                 const SizedBox(height: 10.0),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      10.0, 0.0, 20.0, 8.0),
-                                  child: TextFormField(
-                                    controller: _pass,
-                                    onSaved: (value) => setState(() {
-                                      password = value;
-                                    }),
-                                    validator: _validatePassword,
-                                    decoration: InputDecoration(
-                                        icon: Icon(Icons.lock,
-                                        
-                                            color: Color.fromRGBO(38, 131, 138,1)),
-                                        labelText: "Password",
-                                        hintText: "Enter A password"),
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20.0),
-                          Container(
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            width: double.infinity,
-                            child: RaisedButton(
-                              color: Color.fromRGBO(38, 131, 138,1),
-                              textColor: Colors.white,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  _formKey.currentState.save();
-                                  _signIn();
-                                } else {
-                                  setState(() {
-                                    _autoValidate = true;
-                                  });
-                                }
-                              },
-                              padding: EdgeInsets.only(
-                                  left: 30.0,
-                                  right: 30.0,
-                                  top: 16.0,
-                                  bottom: 16.0),
-                              child: Text('SignIn'),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20.0),
-                          Container(
+                                 Container(
                             margin:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
@@ -133,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => SignupPage(),
+                                    builder: (_) => HomePage(),
                                   ),
                                 );
                               },
@@ -142,13 +75,47 @@ class _LoginPageState extends State<LoginPage> {
                                   right: 30.0,
                                   top: 16.0,
                                   bottom: 16.0),
-                              child: Text('SignUp'),
+                              child: Text('Parent'),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                           ),
                           const SizedBox(height: 20.0),
+                          Container(
+                            margin:
+                            const EdgeInsets.symmetric(horizontal: 16.0),
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Color.fromRGBO(38, 131, 138,1),
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ChildHome(),
+                                  ),
+                                );
+
+                              },
+                              padding: EdgeInsets.only(
+                                  left: 30.0,
+                                  right: 30.0,
+                                  top: 16.0,
+                                  bottom: 16.0),
+                              child: Text('Child'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
+                       
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                         
+                       
                          
                         ],
                       ),

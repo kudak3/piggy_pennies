@@ -34,8 +34,8 @@ class HomePageState extends State<HomePage> {
 
   List menuList = [
     {'icon': 'assets/icons/target.png', 'title': 'Goal'},
-    {'icon': 'assets/icons/target.png', 'title': 'Chores'},
-    {'icon': 'assets/icons/target.png', 'title': 'Balance'},
+    {'icon': 'assets/icons/clean.png', 'title': 'Chores'},
+    {'icon': 'assets/icons/balanced.png', 'title': 'Balance'},
     {'icon': 'assets/icons/target.png', 'title': 'Message'},
   ];
 
@@ -61,7 +61,7 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             Container(
               color: Color.fromRGBO(38, 131, 138, 1),
-              height: children ==null ? 100 :200,
+              height: children == null ? 100 : 200,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
@@ -72,8 +72,16 @@ class HomePageState extends State<HomePage> {
                           children: children
                               .map((e) => Row(
                                     children: <Widget>[
-                                      CircleAvatar(
-                                        child: Text(e.fullName.substring(0,2)),
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedChild = e;
+                                          });
+                                        },
+                                        child: CircleAvatar(
+                                          child:
+                                              Text(e.fullName.substring(0, 2)),
+                                        ),
                                       ),
                                       SizedBox(width: 10),
                                     ],
@@ -81,8 +89,13 @@ class HomePageState extends State<HomePage> {
                               .toList()),
                   selectedChild != null
                       ? CircleAvatar(
-                        radius: 30,
-                          child: Text(selectedChild.fullName.substring(0,2).toUpperCase(),style: TextStyle(fontSize: 40),),
+                          radius: 30,
+                          child: Text(
+                            selectedChild.fullName
+                                .substring(0, 2)
+                                .toUpperCase(),
+                            style: TextStyle(fontSize: 40),
+                          ),
                         )
                       : Container(height: 0, width: 0),
                   SizedBox(
@@ -100,7 +113,9 @@ class HomePageState extends State<HomePage> {
                   ),
                   Text(
                       selectedChild != null
-                          ? "\$" + selectedChild.balance.toString()
+                          ? selectedChild.balance != null
+                              ? "\$" + selectedChild.balance.toString()
+                              : "\$0.00"
                           : "",
                       style: TextStyle(
                           color: Colors.white,
