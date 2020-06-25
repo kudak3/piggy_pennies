@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:piggy_pennies/model/child.dart';
 
 import 'package:piggy_pennies/model/goal.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
 import 'package:piggy_pennies/service.dart/firestore_service.dart';
 import 'package:piggy_pennies/ui/authentication/child_reg.dart';
-
+import 'package:piggy_pennies/ui/child/addgoal.dart';
 
 class ListGoals extends StatefulWidget {
   final String fullName;
-  ListGoals({this.fullName});
+  final Child child;
+  ListGoals({this.fullName, this.child});
 
   _ListGoalsState createState() => _ListGoalsState();
 }
@@ -22,8 +24,6 @@ class _ListGoalsState extends State<ListGoals> {
   List<Goal> goals = [];
 
   bool _isLoading = false;
-
-
 
   AuthenticationService get authenticationService =>
       GetIt.I<AuthenticationService>();
@@ -38,18 +38,22 @@ class _ListGoalsState extends State<ListGoals> {
   }
 
   getGoals() async {
-    var tmp = await firestoreService.getChildren();
+    var tmp = await firestoreService.getGoals(widget.child.fullName);
+    print("---------=-=-=-=-");
+    print(tmp);
 
     setState(() {
       goals = tmp;
     });
+    print("-=-=-=-=-=======");
+    print(goals);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.fullName + "Goals"),
+        title: Text(widget.child.fullName + "\'s Goals"),
       ),
       body: Container(
         margin: const EdgeInsets.only(
@@ -77,8 +81,9 @@ class _ListGoalsState extends State<ListGoals> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => ChildReg(
-                                newacc: false,
+                              builder: (_) => AddGoal(
+                                title: "Add new goal",
+                                fullName: widget.child.fullName,
                               ),
                             ),
                           );
@@ -106,13 +111,18 @@ class _ListGoalsState extends State<ListGoals> {
           return Card(
             elevation: 2.0,
             child: Row(
+              mainAxisAlignment:MainAxisAlignment.center,
               children: <Widget>[
                 Column(
-
                   children: <Widget>[
-                    Text("Bear toy"),
-                    Divider(),
-                  
+                    Text(goals[index].goalName,style:TextStyle(fontSize:20)),
+                    SizedBox(height:10),
+                    Divider(
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    SizedBox(height:10),
+                    Text("\$" +goals[index].cost),
                   ],
                 ),
                 Image.asset('assets/toys images/sofa_1.png')
@@ -122,7 +132,6 @@ class _ListGoalsState extends State<ListGoals> {
         },
       );
 
- 
   showToast(String msg) {
     Fluttertoast.showToast(
         msg: msg,

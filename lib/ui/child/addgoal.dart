@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:piggy_pennies/model/api_response.dart';
+import 'package:piggy_pennies/model/child.dart';
 
 import 'package:piggy_pennies/model/goal.dart';
 import 'package:piggy_pennies/service.dart/firestore_service.dart';
@@ -11,7 +12,8 @@ import 'listgoal.dart';
 class AddGoal extends StatefulWidget {
   final String fullName;
   final String title;
-  AddGoal({this.title,this.fullName});
+  final Child child;
+  AddGoal({this.title,this.fullName,this.child});
 
   _AddGoalState createState() => _AddGoalState();
 }
@@ -113,7 +115,11 @@ class _AddGoalState extends State<AddGoal> {
                     color: Color.fromRGBO(38, 131, 138, 1),
                     textColor: Colors.white,
                     onPressed: () {
-                      _next();
+                      if(_formKey.currentState.validate()){
+                        _formKey.currentState.save();
+                        _next();
+                      }
+                    
                     },
                     padding: EdgeInsets.only(
                         left: 40.0, right: 30.0, top: 16.0, bottom: 16.0),
@@ -172,7 +178,7 @@ class _AddGoalState extends State<AddGoal> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => ListGoals(),
+                          builder: (_) => ListGoals(fullName:widget.child.fullName,child: widget.child,),
                         ),
                       );
                     },

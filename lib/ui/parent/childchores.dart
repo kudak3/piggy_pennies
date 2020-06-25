@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:piggy_pennies/model/child.dart';
 
 import 'package:piggy_pennies/model/chore.dart';
 import 'package:piggy_pennies/service.dart/firestore_service.dart';
@@ -8,15 +9,27 @@ import 'package:piggy_pennies/service.dart/firestore_service.dart';
 class ChildChores extends StatefulWidget {
   final String childId;
   final String name;
-  ChildChores({this.childId,this.name});
+  final Child child;
+  ChildChores({this.childId,this.name,this.child});
   _ChildChoresState createState() => _ChildChoresState();
 }
 
 class _ChildChoresState extends State<ChildChores> {
-  
+  List<Chore> chores = [];
 
     FirestoreService get firestoreService =>
       GetIt.I<FirestoreService>();
+
+
+ getChores() async {
+    var tmp = await firestoreService.getChores(widget.child);
+
+
+    setState(() {
+      chores = tmp;
+    
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +37,7 @@ class _ChildChoresState extends State<ChildChores> {
   length: 3,
   child: Scaffold(
     appBar: AppBar(
+      title: Text(widget.name + '\'s chores'),
       bottom: TabBar(
         tabs: [
           Tab(text: 'UnApproved',),
@@ -38,17 +52,9 @@ class _ChildChoresState extends State<ChildChores> {
                 SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    StreamBuilder(
-                        initialData: [],
-                        stream: firestoreService.getChores('unapproved',widget.childId),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
-
-                          List<Chore> chores = snapshot.data;
-                          return listView(chores);
-                        }),
+                    
+                       Container(child:listView(chores),),
+                       
                     SizedBox(
                       height: 10.0,
                     ),
@@ -75,17 +81,9 @@ class _ChildChoresState extends State<ChildChores> {
                SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    StreamBuilder(
-                        initialData: firestoreService.getAllowancesByChildId(),
-                        stream: firestoreService.getChores('pending',widget.childId),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
-
-                          List<Chore> chores = snapshot.data;
-                          return listView(chores);
-                        }),
+                    
+                        Container(height: 300,child:listView(chores),),
+                       
                     SizedBox(
                       height: 10.0,
                     ),
@@ -96,17 +94,9 @@ class _ChildChoresState extends State<ChildChores> {
               SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    StreamBuilder(
-                        initialData: [],
-                        stream: firestoreService.getChores('completed',widget.childId),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(height: 1, width: 1);
-
-                          List<Chore> chores = snapshot.data;
-                          return listView(chores);
-                        }),
+                 
+                          Container(height: 300,child:listView(chores),),
+                      
                     SizedBox(
                       height: 10.0,
                     ),

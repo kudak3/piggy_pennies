@@ -96,7 +96,7 @@ class FirestoreService {
 
     try {
       await _goalCollectionReference
-          .document(goal.childName)
+          .document(goal.goalName)
           .setData(goal.toJson());
 
       return APIResponse<bool>(error: false);
@@ -133,7 +133,7 @@ class FirestoreService {
 
     return querySnapShot.documents
         .map(
-          (e) => Allowance.fromJson(e.data),
+          (e) => Goal.fromJson(e.data),
         )
         .toList();
 
@@ -179,20 +179,7 @@ class FirestoreService {
             (e) => Child.fromJson(e.data),
           )
           .toList();
-      //  _childrenCollectionReference
-      //       .where("parentId", isEqualTo: user.uid)
-      //       .snapshots()
-      //       .listen(
-      //         (data) => data.documents.forEach(
-      //           (doc) =>
-      //           children.add(
-      //             Child.fromJson(doc.data),
-      //           ),
-      //         ),
-      //       );
-      //   print("===============================================");
-      //   print(children);
-      //   return children;
+    
     }
 
     Stream<List<Child>> getAllowancesByChildId() async* {
@@ -207,16 +194,33 @@ class FirestoreService {
       yield children;
     }
 
-    Stream<List<Child>> getChores(String status, String childId) async* {
-      String ui = await authenticationService.currentUser();
-      List<Child> children;
+    // Stream<List<Child>> getChores(String status, String childId) async* {
+    //   String ui = await authenticationService.currentUser();
+    //   List<Child> children;
 
-      _childrenCollectionReference
-          .where("parentId", isEqualTo: ui)
-          .snapshots()
-          .listen((data) => data.documents
-              .forEach((doc) => children.add(Child.fromJson(doc.data))));
-      yield children;
+    //   _childrenCollectionReference
+    //       .where("parentId", isEqualTo: ui)
+    //       .snapshots()
+    //       .listen((data) => data.documents
+    //           .forEach((doc) => children.add(Child.fromJson(doc.data))));
+    //   yield children;
+    
+    // }
+
+    Future getChores(Child child) async {
+      User user = await authenticationService.currentUser();
+   
+
+      QuerySnapshot querySnapShot = await _choresCollectionReference
+          .where("assigness", arrayContains: child)
+          .getDocuments();
+   
+
+      return querySnapShot.documents
+          .map(
+            (e) => Chore.fromJson(e.data),
+          )
+          .toList();
     
     }
   }
