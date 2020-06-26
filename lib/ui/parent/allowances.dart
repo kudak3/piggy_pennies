@@ -152,7 +152,14 @@ class _AllowancesState extends State<Allowances> {
 
   
    getAllowances() async {
-    var tmp = await firestoreService.getAllowances(widget.name);
+     var tmp;
+     if(widget.name!=null){
+     tmp = await firestoreService.getAllowances(widget.name);
+     }else{
+           tmp = await firestoreService.getAllAllowances();
+     }
+
+
 
     setState(() {
       allowances = tmp;

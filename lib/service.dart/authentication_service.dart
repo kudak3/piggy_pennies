@@ -18,6 +18,23 @@ class AuthenticationService {
     return _user;
   }
 
+  Future logout()async{
+     try {
+     
+         return APIResponse<User>(
+        error: false,
+       
+      );
+      
+     
+
+     
+    } catch (e) {
+      return APIResponse<bool>(error: true, errorMessage: e.message);
+    }
+
+  }
+
 //signup with email
   Future signUpWithEmail(String email, String password, String username) async {
     try {

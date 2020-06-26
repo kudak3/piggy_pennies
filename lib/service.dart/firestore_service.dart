@@ -160,6 +160,27 @@ class FirestoreService {
 
   }
 
+   Future getAllAllowances() async {
+  
+
+    QuerySnapshot querySnapShot = await _allowanceCollectionReference
+        
+        .getDocuments();
+    print('userid =====list');
+    print(querySnapShot.documents
+        .map(
+          (e) => Allowance.fromJson(e.data),
+        )
+        .toList());
+
+    return querySnapShot.documents
+        .map(
+          (e) => Allowance.fromJson(e.data),
+        )
+        .toList();
+
+  }
+
     Future getChildren() async {
       User user = await authenticationService.currentUser();
    

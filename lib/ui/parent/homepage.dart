@@ -4,6 +4,10 @@ import 'package:piggy_pennies/model/child.dart';
 import 'package:piggy_pennies/model/user.dart';
 import 'package:piggy_pennies/service.dart/authentication_service.dart';
 import 'package:piggy_pennies/service.dart/firestore_service.dart';
+import 'package:piggy_pennies/ui/authentication/loginpage.dart';
+import 'package:piggy_pennies/ui/child/listgoal.dart';
+import 'package:piggy_pennies/ui/parent/childchores.dart';
+import 'package:piggy_pennies/ui/parent/choose_chore.dart';
 
 
 import 'allowances.dart';
@@ -31,6 +35,7 @@ class HomePageState extends State<HomePage> {
   Child selectedChild;
   List<Child> children =[];
   FirestoreService get firestoreService => GetIt.I<FirestoreService>();
+  
 
   List menuList = [
     {'icon': 'assets/icons/target.png', 'title': 'Goal'},
@@ -136,7 +141,9 @@ class HomePageState extends State<HomePage> {
                     .map((e) => Card(
                           child: Center(
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                  page(e['title']);
+                              },
                               child: Column(children: <Widget>[
                                 Image.asset(
                                   e['icon'],
@@ -186,6 +193,36 @@ class HomePageState extends State<HomePage> {
         },
       );
 
+      page(String page){
+
+    if(page=='Chores'){
+       Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ChildChores(name: selectedChild.fullName,),
+      ),
+    );
+    }
+    if(page=='Goal'){
+       Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ListGoals(child: selectedChild,),
+      ),
+    );
+    }
+
+    if(page=='Balance'){
+       Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => Allowances(name: selectedChild.fullName,),
+      ),
+    );
+    }
+
+      }
+
   _buildDrawer() {
     return Drawer(
       child: Container(
@@ -205,9 +242,21 @@ class HomePageState extends State<HomePage> {
                   child: Icon(Icons.person),
                 ),
               ),
-              SizedBox(
+                SizedBox(
                 height: 30.0,
               ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ChooseChore(),
+                      ),
+                    );
+                  },
+                  child: _buildRow(Icons.add, "New Chore")),
+              Divider(color: divider),
+            
               GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -245,10 +294,11 @@ class HomePageState extends State<HomePage> {
               Divider(color: divider),
               GestureDetector(
                 onTap: () {
+authenticationService.logout();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => MyKids(),
+                      builder: (_) => LoginPage(),
                     ),
                   );
                 },
