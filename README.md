@@ -1,6 +1,6 @@
 # Piggie Pennies
 
-This mobile app is an interactive savings app for childred.
+This mobile app is an interactive savings app for children. Parents can assign chores and reward their kids when they complete the chores 
 
 ## Getting Started
 To install the following components, please follow the Flutter Installation guide for your platform
